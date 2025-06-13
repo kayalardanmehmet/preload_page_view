@@ -437,6 +437,7 @@ class PreloadPageView extends StatefulWidget {
     PreloadPageController? controller,
     this.physics,
     this.pageSnapping = true,
+    this.clipBehavior = Clip.hardEdge,
     this.onPageChanged,
     List<Widget> children = const <Widget>[],
     this.preloadPagesCount = 1,
@@ -465,6 +466,7 @@ class PreloadPageView extends StatefulWidget {
     PreloadPageController? controller,
     this.physics,
     this.pageSnapping = true,
+    this.clipBehavior = Clip.hardEdge,
     this.onPageChanged,
     required IndexedWidgetBuilder itemBuilder,
     int? itemCount,
@@ -483,6 +485,7 @@ class PreloadPageView extends StatefulWidget {
     PreloadPageController? controller,
     this.physics,
     this.pageSnapping = true,
+    this.clipBehavior = Clip.hardEdge,
     this.onPageChanged,
     required this.childrenDelegate,
     this.preloadPagesCount = 1,
@@ -525,6 +528,8 @@ class PreloadPageView extends StatefulWidget {
 
   /// Set to false to disable page snapping, useful for custom scroll behavior.
   final bool pageSnapping;
+
+  final Clip clipBehavior;
 
   /// Called whenever the page in the center of the viewport changes.
   final ValueChanged<int>? onPageChanged;
@@ -610,6 +615,7 @@ class _PreloadPageViewState extends State<PreloadPageView> {
         physics: physics,
         viewportBuilder: (BuildContext context, ViewportOffset position) {
           return Viewport(
+            clipBehavior: widget.clipBehavior,
             cacheExtent: _preloadPagesCount < 1
                 ? 0
                 : (_preloadPagesCount == 1
